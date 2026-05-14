@@ -3,11 +3,16 @@ extends CharacterBody3D
 
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var movement_speed : float = 100.0
-@export var jump_velocity : float = 10.0
+@export var jump_velocity : float = 5.0
 
 @onready var camera_controller = $CameraController
 
 var control_enabled : bool = true
+
+func _process(_delta):
+	if control_enabled:
+		rotation_degrees.y = camera_controller.yaw
+		camera_controller.rotation_degrees.x = camera_controller.pitch
 
 func _physics_process(delta):
 	

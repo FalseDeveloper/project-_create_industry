@@ -1,10 +1,19 @@
 class_name CameraController
 extends Camera3D
 
-# Called when the node enters the scene tree for the first time.
+var yaw : float = 0
+var pitch : float = 0
+
+@export var sensitivity : float = 0.1
+
 func _ready():
 	pass # Replace with function body.
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _input(event):
+	if event is InputEventMouseMotion:
+		var velocity = event.screen_relative
+		
+		yaw -= velocity.x * sensitivity
+		pitch -= velocity.y * sensitivity
+		
+		pitch = clamp(pitch, -70, 70)
