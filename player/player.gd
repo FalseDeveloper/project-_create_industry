@@ -1,5 +1,8 @@
+## Main player controller
 class_name Player
 extends CharacterBody3D
+
+#TODO: Proper jump validation
 
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var movement_speed : float = 200.0
