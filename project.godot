@@ -16,6 +16,10 @@ run/main_scene="uid://ndni4wrsexsb"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="uid://domfj60vnp3hg"
 
+[autoload]
+
+Utils="*uid://bh5lu5oc4etb6"
+
 [display]
 
 window/size/viewport_width=1920
@@ -75,4 +79,5 @@ Menu={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
