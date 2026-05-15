@@ -1,5 +1,5 @@
+## Voxel data class
 class_name VoxelData
-extends RefCounted
+extends Resource
 
-@export var VoxelType : Types.VoxelDataType = Types.VoxelDataType.DECORATIVE
-@export var Components : Dictionary[String, Callable] = {}
+@export var components : Dictionary[StringName, Callable] = {}

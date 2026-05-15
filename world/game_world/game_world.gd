@@ -4,16 +4,20 @@ extends Node3D
 # -- Data Structure --
 #
 # NOTE: A GameWorld stores:
-# - VisualChunks
+# - Chunks
 # - - VoxelInstances (Decorative, Collision)
 # - - VisualTileEntities (Animated, Decorative, Refers to TileEntityId)
 # - Tile Entities (Simulation, has components)
-# - get_voxel_at_position() : Returns either 
+# - get_voxel_at_position() : Returns either of the above. 
 #
-# NOTE: Our general data structure stores:
-# - VoxelDataHash Dictionary [BlockId] : VoxelData
-#
-# NOTE: VoxelData is inherited by DecorativeVoxelData, TileEntityData & VisualTileEntityData
+
+@onready var voxel_mesh = $VoxelMesh
+
+func _ready():
+	var arrayMesh = VoxelMesher.new().generate_chunk_mesh(0)
+	
+	voxel_mesh.mesh = arrayMesh
 
 func _process(_delta):
+	
 	pass

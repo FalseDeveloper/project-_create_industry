@@ -5,4 +5,4 @@
 [node name="GameWorld" type="Node3D" unique_id=1809775253]
 script = ExtResource("1_73nr2")
 
-[node name="Chunks" type="Node3D" parent="." unique_id=1157415498]
+[node name="VoxelMesh" type="MeshInstance3D" parent="." unique_id=981052773]

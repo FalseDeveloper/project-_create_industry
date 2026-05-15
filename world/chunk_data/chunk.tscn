@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bfs8mtjwygwht"]
+
+[ext_resource type="Script" uid="uid://cu7gaqyow5ehk" path="res://world/chunk_data/chunk_data.gd" id="1_kkcqc"]
+
+[node name="Chunk" type="Node3D" unique_id=2127030341]
+script = ExtResource("1_kkcqc")
+metadata/_custom_type_script = "uid://cu7gaqyow5ehk"
