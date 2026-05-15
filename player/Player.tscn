@@ -5,6 +5,8 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulp21"]
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3c3w1"]
+
 [node name="Player" type="CharacterBody3D" unique_id=1542657291]
 script = ExtResource("1_ulp21")
 metadata/_custom_type_script = "uid://bww15p2sxgxag"
@@ -15,5 +17,8 @@ shape = SubResource("CapsuleShape3D_ulp21")
 [node name="CameraController" type="Camera3D" parent="." unique_id=1461246795]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48868632, 0)
 current = true
-fov = 100.0
+fov = 80.0
 script = ExtResource("2_3c3w1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2068375010]
+mesh = SubResource("CapsuleMesh_3c3w1")

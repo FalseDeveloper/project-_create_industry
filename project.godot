@@ -20,6 +20,9 @@ config/icon="uid://domfj60vnp3hg"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/window_width_override=1344
+window/size/window_height_override=756
+window/energy_saving/keep_screen_on=false
 window/stretch/mode="viewport"
 
 [input]
@@ -68,6 +71,7 @@ Menu={
 [physics]
 
 3d/physics_engine="Jolt Physics"
+3d/default_gravity=19.6
 
 [rendering]
 

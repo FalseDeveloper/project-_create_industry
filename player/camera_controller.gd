@@ -4,7 +4,7 @@ extends Camera3D
 var yaw : float = 0
 var pitch : float = 0
 
-@export var sensitivity : float = 0.1
+@export var sensitivity : float = 0.3
 
 func _ready():
 	pass # Replace with function body.

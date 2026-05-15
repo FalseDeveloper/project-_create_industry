@@ -2,12 +2,15 @@ class_name Player
 extends CharacterBody3D
 
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
-@export var movement_speed : float = 100.0
-@export var jump_velocity : float = 5.0
+@export var movement_speed : float = 200.0
+@export var jump_velocity : float = 7.0
 
 @onready var camera_controller = $CameraController
 
 var control_enabled : bool = true
+
+func _ready():
+	set_control_enabled(control_enabled)
 
 func _process(_delta):
 	if control_enabled:
@@ -49,7 +52,7 @@ func handle_vertical_velocity(delta):
 		# If on air, apply gravity
 		velocity.y -= gravity * delta
 	
-	if Input.is_action_just_pressed("Jump") and control_enabled:
+	if Input.is_action_pressed("Jump") and control_enabled:
 		on_spacebar_pressed()
 
 func _input(_event):
@@ -61,6 +64,9 @@ func on_spacebar_pressed():
 		velocity.y += jump_velocity
 
 func can_jump() -> bool:
+	if !is_on_floor():
+		return false
+	
 	return true
 
 func set_control_enabled(enabled : bool):
