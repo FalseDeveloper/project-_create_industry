@@ -58,35 +58,26 @@ func new_quad(position : Vector3, direction : Vector3) -> Array:
 	
 	return arrays
 
-## Generates a mesh from chunk data
-func generate_chunk_mesh(chunkData : ChunkData) -> ArrayMesh:
-	var newMesh = ArrayMesh.new()
-	
-	#TODO: Greedy meshing,, scawyyy
-	var _quadsToRender : Dictionary[Vector3, Vector3] = {}
-	
-	for pos in chunkData.voxels:
-		for direction in Utils.AXIS_DIRECTIONS.values():
-			if chunkData.voxels.get(pos + Vector3i(direction)) != null:
-				continue
-			
-			var quadArrays = new_quad(Vector3(pos) + direction/2, direction)
-			
-			newMesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, quadArrays)
-			
-	
-	return newMesh
-
-func generate_chunk_multimesh(chunkData : ChunkData) -> Dictionary[Vector3, Vector3]:
+## Generates a multi-mesh and a collider from chunk data
+func generate_chunk_multimesh(chunkData : ChunkData) -> Dictionary:
 	var instances : Dictionary[Vector3, Vector3] = {}
+	var vertices : PackedVector3Array = PackedVector3Array()
 	
 	for pos in chunkData.voxels:
 		for direction in Utils.AXIS_DIRECTIONS.values():
 			if chunkData.voxels.get(pos + Vector3i(direction)) != null:
 				continue
 			
-			instances[Vector3(pos) + direction/2] = direction
+			var center : Vector3 = Vector3(pos) + direction/2
+			
+			instances[center] = direction
+			
+			var quadVertices = generate_face(center, direction)
+			vertices.append_array(quadVertices)
 			
 	
-	return instances
+	return {
+		instances = instances,
+		vertices = vertices
+	}
 	

@@ -13,19 +13,21 @@ extends Node3D
 
 # debug thingie
 @onready var voxel_mesh = $VoxelMesh
+@onready var collision_shape_3d = $VoxelCollision/CollisionShape3D
+
 var quad_mesh = load("res://world/game_world/quad.tres")
 
 func _ready():
 	var debugChunk = ChunkData.new()
 	
-	var instances = VoxelMesher.new().generate_chunk_multimesh(debugChunk)
+	var results = VoxelMesher.new().generate_chunk_multimesh(debugChunk)
 	
 	var voxel_multimesh = voxel_mesh.multimesh
 	
 	var currentIndex = 0
 	
-	for voxelPosition in instances:
-		var voxelDirection = instances[voxelPosition]
+	for voxelPosition in results.instances:
+		var voxelDirection = results.instances[voxelPosition]
 		
 		var voxelBasis = Basis(Quaternion(Vector3.UP, voxelDirection))
 		
@@ -37,6 +39,13 @@ func _ready():
 		voxel_multimesh.set_instance_transform(currentIndex, voxelTransform)
 		
 		currentIndex += 1
+	
+	voxel_multimesh.visible_instance_count = currentIndex
+	
+	var voxel_shape = ConvexPolygonShape3D.new()
+	voxel_shape.points = results.vertices
+	
+	collision_shape_3d.shape = voxel_shape
 
 func _process(_delta):
 	
