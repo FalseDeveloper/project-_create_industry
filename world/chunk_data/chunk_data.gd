@@ -23,3 +23,14 @@ func chunk_to_grid_position(voxel_position : Vector3i) -> Vector3i:
 	grid_position = Vector3i(chunk_grid_position.x, 0, chunk_grid_position.y) + voxel_position
 	
 	return grid_position
+
+func grid_to_chunk_position(voxel_position : Vector3i) -> Vector3i:
+	var grid_chunk_position : Vector2i = tile_position * world.CHUNK_SIZE
+	
+	var chunk_voxel_position :=  Vector3i(
+		voxel_position.x - grid_chunk_position.x,
+		voxel_position.y,
+		voxel_position.z - grid_chunk_position.y
+	)
+	
+	return chunk_voxel_position

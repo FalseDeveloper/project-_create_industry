@@ -2,7 +2,7 @@
 class_name Player
 extends CharacterBody3D
 
-#TODO: Proper jump validation
+@export var game_world : GameWorld
 
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var movement_speed : float = 5.0
@@ -12,7 +12,7 @@ var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var god_mode := false
 var god_goal = Vector3.ZERO
 
-@onready var camera_controller = $CameraController
+@onready var camera_controller : CameraController = $CameraController
 
 var control_enabled : bool = true
 

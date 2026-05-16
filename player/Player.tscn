@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bww15p2sxgxag" path="res://player/player.gd" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://rlb6s8ksj0om" path="res://player/camera_controller.gd" id="2_3c3w1"]
+[ext_resource type="Script" uid="uid://dival45w5g4oi" path="res://player/player_builder/player_builder.gd" id="3_wnvi2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulp21"]
 
@@ -12,13 +13,24 @@ script = ExtResource("1_ulp21")
 metadata/_custom_type_script = "uid://bww15p2sxgxag"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1222294156]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_ulp21")
 
-[node name="CameraController" type="Camera3D" parent="." unique_id=1461246795]
+[node name="CameraController" type="Camera3D" parent="." unique_id=332043790]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48868632, 0)
 current = true
 fov = 80.0
 script = ExtResource("2_3c3w1")
+metadata/_custom_type_script = "uid://rlb6s8ksj0om"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2068375010]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_3c3w1")
+
+[node name="PlayerBuilder" type="Node" parent="." unique_id=1045345824 node_paths=PackedStringArray("player")]
+script = ExtResource("3_wnvi2")
+player = NodePath("..")
+metadata/_custom_type_script = "uid://dival45w5g4oi"
+
+[node name="DebugSphere" type="CSGSphere3D" parent="PlayerBuilder" unique_id=98510779]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 1.5305057, 0)

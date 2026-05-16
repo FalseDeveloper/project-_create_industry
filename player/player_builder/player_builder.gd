@@ -1,0 +1,49 @@
+class_name PlayerBuilder
+extends Node
+
+@export var build_range = 100
+@export var player : Player
+
+@onready var debug_sphere = $DebugSphere
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+func get_targeted_surface() -> Types.VoxelSurface:
+	var targeted_surface : Types.VoxelSurface = Types.VoxelSurface.new()
+	
+	var mouse_pos = get_viewport().get_mouse_position()
+	
+	var ray_origin = player.camera_controller.project_ray_origin(mouse_pos)
+	var ray_dir = player.camera_controller.project_ray_normal(mouse_pos)
+	
+	var space_state = player.get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_origin + (ray_dir * build_range))
+	var result = space_state.intersect_ray(query)
+	
+	if result:
+		debug_sphere.global_position = result.position
+		
+		var targeted_position : Vector3 = result.position - ray_dir * 0.05
+		var targeted_voxel := player.game_world.world_to_grid_space(targeted_position)
+		
+		var direction := targeted_position.direction_to(Vector3(targeted_voxel))
+		
+		print(
+			"Pos: ", targeted_position,
+			"\t| Voxel: ", targeted_voxel,
+			"\t| RawDir: ", direction,
+			"\t| SnapDir: ", Utils.get_snapped_direction(direction)
+			)
+		
+		targeted_surface.position = targeted_voxel + Utils.get_snapped_direction(direction)
+		targeted_surface.direction = Utils.get_snapped_direction(-direction)
+	
+	return targeted_surface
+
+func _input(event):	
+	if event.is_action_pressed("Place"):
+		var targeted_surface : Types.VoxelSurface = get_targeted_surface()
+		
+		player.game_world.set_voxel(targeted_surface.position + targeted_surface.direction)

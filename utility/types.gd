@@ -6,3 +6,7 @@ enum VoxelDataType {
 	DECORATIVE,
 	VISUAL_TILE_ENTITY,
 }
+
+class VoxelSurface:
+	var position : Vector3i
+	var direction : Vector3i
