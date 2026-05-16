@@ -5,8 +5,12 @@ extends CharacterBody3D
 #TODO: Proper jump validation
 
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
-@export var movement_speed : float = 200.0
+@export var movement_speed : float = 5.0
 @export var jump_velocity : float = 7.0
+
+@export var god_velocity : float = 60.0
+@export var god_mode := false
+var god_goal = Vector3.ZERO
 
 @onready var camera_controller = $CameraController
 
@@ -21,6 +25,9 @@ func _process(_delta):
 		camera_controller.rotation_degrees.x = camera_controller.pitch
 
 func _physics_process(delta):
+	if god_mode:
+		handle_god_mode(delta)
+		return
 	
 	# Plane movement
 	handle_movement_velocity(delta)
@@ -28,11 +35,10 @@ func _physics_process(delta):
 	# Handle gravity, jump
 	handle_vertical_velocity(delta)
 	
-	
 	move_and_slide()
 
-# Plane movement
-func handle_movement_velocity(delta):
+## Handle XZ plane movement
+func handle_movement_velocity(_delta):
 	var input_z = Input.get_axis("Forwards", "Backwards")
 	var input_x = Input.get_axis("Left", "Right")
 	
@@ -41,11 +47,12 @@ func handle_movement_velocity(delta):
 		input_x = 0
 	
 	var relative_movement_vel = Vector3(input_x, 0, input_z).normalized() * movement_speed
-	var movement_velocity = global_transform.basis * relative_movement_vel * delta
+	var movement_velocity = global_transform.basis * relative_movement_vel
 	
 	velocity.x = movement_velocity.x
 	velocity.z = movement_velocity.z
 
+## Handle Y axis movement
 func handle_vertical_velocity(delta):
 	# Gravity/Floor
 	if is_on_floor():
@@ -61,6 +68,10 @@ func handle_vertical_velocity(delta):
 func _input(_event):
 	if Input.is_action_just_pressed("Menu"):
 		set_control_enabled(!control_enabled)
+	
+	if Input.is_action_just_pressed("Debug1"):
+		god_goal = position
+		god_mode = !god_mode
 
 func on_spacebar_pressed():
 	if can_jump():
@@ -78,3 +89,17 @@ func set_control_enabled(enabled : bool):
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if enabled else Input.MOUSE_MODE_VISIBLE
 	
 	print("Control enabled" if enabled else "Control disabled")
+
+func handle_god_mode(delta):
+	var input_x = Input.get_axis("Left", "Right")
+	var input_y = Input.get_axis("Down", "Jump")
+	var input_z = Input.get_axis("Forwards", "Backwards")
+	
+	god_goal += global_transform.basis * Vector3(
+		input_x,
+		input_y,
+		input_z
+	) * god_velocity * delta
+	
+	position = position.lerp(god_goal, 10 * delta)
+	

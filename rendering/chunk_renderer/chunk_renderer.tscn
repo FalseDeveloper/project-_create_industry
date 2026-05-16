@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cdl3f21ang6qs"]
+
+[ext_resource type="Script" uid="uid://dp33r4gdgpxrg" path="res://rendering/chunk_renderer/chunk_renderer.gd" id="1_hqqwc"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_j3bo4"]
+
+[node name="ChunkRenderer" type="Node3D" unique_id=1394103536]
+script = ExtResource("1_hqqwc")
+metadata/_custom_type_script = "uid://dp33r4gdgpxrg"
+
+[node name="ChunkMesh" type="MultiMeshInstance3D" parent="." unique_id=683546562]
+
+[node name="ChunkCollision" type="StaticBody3D" parent="." unique_id=703372992]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ChunkCollision" unique_id=943801610]
+shape = SubResource("ConvexPolygonShape3D_j3bo4")

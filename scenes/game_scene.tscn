@@ -45,7 +45,7 @@ albedo_texture = SubResource("NoiseTexture2D_bw6k5")
 [node name="GameWorld" parent="." unique_id=1809775253 instance=ExtResource("1_w5aja")]
 
 [node name="Player" parent="." unique_id=1542657291 instance=ExtResource("2_onqr8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5575682, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7434472, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1817036373]
 environment = SubResource("Environment_onqr8")
