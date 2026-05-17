@@ -25,20 +25,12 @@ func get_targeted_surface() -> Types.VoxelSurface:
 	if result:
 		debug_sphere.global_position = result.position
 		
-		var targeted_position : Vector3 = result.position - ray_dir * 0.05
+		var direction := Utils.get_snapped_direction(result.normal)
+		var targeted_position : Vector3 = result.position - (result.normal * 0.01)
 		var targeted_voxel := player.game_world.world_to_grid_space(targeted_position)
 		
-		var direction := targeted_position.direction_to(Vector3(targeted_voxel))
-		
-		print(
-			"Pos: ", targeted_position,
-			"\t| Voxel: ", targeted_voxel,
-			"\t| RawDir: ", direction,
-			"\t| SnapDir: ", Utils.get_snapped_direction(direction)
-			)
-		
-		targeted_surface.position = targeted_voxel + Utils.get_snapped_direction(direction)
-		targeted_surface.direction = Utils.get_snapped_direction(-direction)
+		targeted_surface.position = targeted_voxel
+		targeted_surface.direction = direction
 	
 	return targeted_surface
 
