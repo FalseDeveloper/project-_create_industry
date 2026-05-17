@@ -69,17 +69,32 @@ func world_to_grid_space(world_position : Vector3) -> Vector3i:
 func grid_to_world_space(grid_position : Vector3) -> Vector3:
 	return Vector3(grid_position) + Vector3.ONE/2
 
-func set_voxel(voxel_position : Vector3i):
-	print(voxel_position)
+func get_neighboring_chunks(tile_position : Vector2i) -> Array[ChunkData]:
+	var neighbors : Array[ChunkData] = []
 	
+	neighbors.append(chunks.get(tile_position + Vector2i(1, 0)))
+	neighbors.append(chunks.get(tile_position + Vector2i(-1, 0)))
+	neighbors.append(chunks.get(tile_position + Vector2i(0, 1)))
+	neighbors.append(chunks.get(tile_position + Vector2i(0, -1)))
+	
+	return neighbors
+
+func set_voxel(voxel_position : Vector3i, voxel_id : StringName = "AIR"):
 	var chunk_at_position = get_chunk_at_voxel_position(voxel_position)
 	if chunk_at_position == null:
 		return
 	
 	var voxel_chunk_position = chunk_at_position.grid_to_chunk_position(voxel_position)
 	
-	chunk_at_position.voxels.set(voxel_chunk_position, VoxelInstance.new())
+	if voxel_id == "AIR":
+		chunk_at_position.voxels.erase(voxel_chunk_position)
+	else:
+		chunk_at_position.voxels.set(voxel_chunk_position, VoxelInstance.new())
+	
 	renderers[chunk_at_position].update_chunk()
+	
+	for neighbor in get_neighboring_chunks(chunk_at_position.tile_position):
+		renderers[neighbor].update_chunk()
 
 func _ready():
 	for x in 8:

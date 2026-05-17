@@ -5,6 +5,7 @@ var yaw : float = 0
 var pitch : float = 0
 
 @export var sensitivity : float = 0.3
+@export var pitch_limit : float = 85
 
 func _ready():
 	pass # Replace with function body.
@@ -16,4 +17,4 @@ func _input(event):
 		yaw -= velocity.x * sensitivity
 		pitch -= velocity.y * sensitivity
 		
-		pitch = clamp(pitch, -70, 70)
+		pitch = clamp(pitch, -pitch_limit, pitch_limit)

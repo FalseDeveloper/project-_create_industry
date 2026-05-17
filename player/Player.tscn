@@ -51,9 +51,11 @@ metadata/_custom_type_script = "uid://dival45w5g4oi"
 
 [node name="DebugSphere" type="CSGSphere3D" parent="PlayerBuilder" unique_id=98510779]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 1.5305057, 0)
+visible = false
 radius = 0.1
 material = SubResource("StandardMaterial3D_83hs8")
 
 [node name="Aimer" type="MeshInstance3D" parent="PlayerBuilder" unique_id=2124135403]
+visible = false
 material_override = SubResource("StandardMaterial3D_x8kxw")
 mesh = SubResource("BoxMesh_aqcbf")

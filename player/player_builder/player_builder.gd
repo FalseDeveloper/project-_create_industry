@@ -1,10 +1,9 @@
 class_name PlayerBuilder
 extends Node
 
-@export var build_range = 100
+@export var build_range = 5
 @export var player : Player
 
-@onready var debug_sphere = $DebugSphere
 @onready var aimer = $Aimer
 
 # Called when the node enters the scene tree for the first time.
@@ -13,9 +12,12 @@ func _ready():
 
 func _process(_delta):
 	var targeted_surface := get_targeted_surface()
+		
+	aimer.visible = targeted_surface != null
 	
 	if targeted_surface:
 		aimer.position = targeted_surface.position
+		
 
 func get_targeted_surface() -> Types.VoxelSurface:
 	var targeted_surface : Types.VoxelSurface = Types.VoxelSurface.new()
@@ -29,20 +31,29 @@ func get_targeted_surface() -> Types.VoxelSurface:
 	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_origin + (ray_dir * build_range))
 	var result = space_state.intersect_ray(query)
 	
-	if result:
-		debug_sphere.global_position = result.position
-		
+	if result.get("position"):
 		var direction := Utils.get_snapped_direction(result.normal)
 		var targeted_position : Vector3 = result.position - (result.normal * 0.01)
 		var targeted_voxel := player.game_world.world_to_grid_space(targeted_position)
 		
 		targeted_surface.position = targeted_voxel
 		targeted_surface.direction = direction
+		
+		return targeted_surface
 	
-	return targeted_surface
+	return null
 
 func _input(event):	
 	if event.is_action_pressed("Place"):
 		var targeted_surface : Types.VoxelSurface = get_targeted_surface()
 		
-		player.game_world.set_voxel(targeted_surface.position + targeted_surface.direction)
+		if targeted_surface:
+			player.game_world.set_voxel(targeted_surface.position + targeted_surface.direction, "STONE")
+		
+	
+	if event.is_action_pressed("Destroy"):
+		var targeted_surface : Types.VoxelSurface = get_targeted_surface()
+		
+		if targeted_surface:
+			player.game_world.set_voxel(targeted_surface.position, "AIR")
+		

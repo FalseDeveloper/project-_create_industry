@@ -1,11 +1,11 @@
 [gd_resource type="PlaneMesh" format=3 uid="uid://crxj8fcqm4tsk"]
 
-[ext_resource type="Texture2D" uid="uid://k7ei0pftq3g4" path="res://data/textures/blocks/stone.png" id="1_7pikh"]
+[ext_resource type="Shader" uid="uid://dw2lsyfwbkq8s" path="res://rendering/voxel_texture.gdshader" id="1_7pikh"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6dmd8"]
-albedo_texture = ExtResource("1_7pikh")
-texture_filter = 0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6dmd8"]
+render_priority = 0
+shader = ExtResource("1_7pikh")
 
 [resource]
-material = SubResource("StandardMaterial3D_6dmd8")
+material = SubResource("ShaderMaterial_6dmd8")
 size = Vector2(1, 1)

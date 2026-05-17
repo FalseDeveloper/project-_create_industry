@@ -1,11 +1,15 @@
 shader_type spatial;
 
+uniform sampler2D block_texture;
+
 void vertex() {
 	// Called for every vertex the material is visible on.
 }
 
 void fragment() {
-	// Called for every pixel the material is visible on.
+	vec4 texture_color = texture(block_texture, UV);
+	
+	ALBEDO = vec3(texture_color.x, texture_color.y, texture_color.z);
 }
 
 //void light() {
