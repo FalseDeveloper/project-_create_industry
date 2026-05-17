@@ -5,10 +5,17 @@ extends Node
 @export var player : Player
 
 @onready var debug_sphere = $DebugSphere
+@onready var aimer = $Aimer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
+
+func _process(_delta):
+	var targeted_surface := get_targeted_surface()
+	
+	if targeted_surface:
+		aimer.position = targeted_surface.position
 
 func get_targeted_surface() -> Types.VoxelSurface:
 	var targeted_surface : Types.VoxelSurface = Types.VoxelSurface.new()

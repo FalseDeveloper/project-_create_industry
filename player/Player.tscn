@@ -3,10 +3,27 @@
 [ext_resource type="Script" uid="uid://bww15p2sxgxag" path="res://player/player.gd" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://rlb6s8ksj0om" path="res://player/camera_controller.gd" id="2_3c3w1"]
 [ext_resource type="Script" uid="uid://dival45w5g4oi" path="res://player/player_builder/player_builder.gd" id="3_wnvi2"]
+[ext_resource type="Texture2D" uid="uid://cqch3ob2vrkt4" path="res://player/player_builder/sprites/aimer.png" id="4_83hs8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulp21"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3c3w1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_83hs8"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.3019608)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x8kxw"]
+transparency = 1
+albedo_texture = ExtResource("4_83hs8")
+uv1_offset = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_aqcbf"]
+size = Vector3(1.01, 1.01, 1.01)
 
 [node name="Player" type="CharacterBody3D" unique_id=1542657291]
 script = ExtResource("1_ulp21")
@@ -34,3 +51,9 @@ metadata/_custom_type_script = "uid://dival45w5g4oi"
 
 [node name="DebugSphere" type="CSGSphere3D" parent="PlayerBuilder" unique_id=98510779]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 1.5305057, 0)
+radius = 0.1
+material = SubResource("StandardMaterial3D_83hs8")
+
+[node name="Aimer" type="MeshInstance3D" parent="PlayerBuilder" unique_id=2124135403]
+material_override = SubResource("StandardMaterial3D_x8kxw")
+mesh = SubResource("BoxMesh_aqcbf")
