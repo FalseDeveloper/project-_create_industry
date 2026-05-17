@@ -3,17 +3,21 @@ class_name ChunkRenderer
 extends Node3D
 
 const CHUNK_MULTIMESH_TEMPLATE = preload("uid://dqgmtsxxs35rb")
+const SHADER_MATERIAL = preload("res://world/game_world/quad.tres::ShaderMaterial_6dmd8")
 
 @onready var chunk_mesh = $ChunkMesh
 @onready var chunk_collision_shape = $ChunkCollision/CollisionShape3D
 
 var voxel_mesher := VoxelMesher.new()
 var loaded_chunk_data : ChunkData
-var chunk_multimesh = CHUNK_MULTIMESH_TEMPLATE.duplicate()
+var chunk_multimesh : MultiMesh = CHUNK_MULTIMESH_TEMPLATE.duplicate()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	chunk_mesh.multimesh = chunk_multimesh
+
+func _process(delta):
+	SHADER_MATERIAL.set_shader_parameter("OFFSET", SHADER_MATERIAL.get_shader_parameter("OFFSET") + (0.01 * delta))
 
 func update_chunk():
 	if loaded_chunk_data == null:

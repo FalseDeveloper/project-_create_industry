@@ -76,6 +76,7 @@ environment = SubResource("Environment_onqr8")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=813252462]
 transform = Transform3D(1, 0, 0, 0, 0.5446976, 0.8386325, 0, -0.8386325, 0.5446976, 0, 3.599032, 2.337596)
+shadow_enabled = true
 
 [node name="DebugGround" type="CSGBox3D" parent="." unique_id=1440024726]
 transform = Transform3D(161.37428, -0.0010699296, 0.30610928, 0.17216812, 1.0011913, 0.1509169, -0.30699766, -0.0009365152, 160.99152, 0, -24.281666, 0)
@@ -120,4 +121,9 @@ material = SubResource("StandardMaterial3D_ycayy")
 [node name="CSGSphere3D8" type="CSGSphere3D" parent="." unique_id=27534060]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
 radius = 0.2
+material = SubResource("StandardMaterial3D_mw25s")
+
+[node name="CSGSphere3D8" type="CSGSphere3D" parent="CSGSphere3D8" unique_id=245639912]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -22.843178, 0)
+radius = 0.18754825
 material = SubResource("StandardMaterial3D_mw25s")

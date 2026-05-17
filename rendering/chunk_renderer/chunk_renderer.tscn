@@ -9,6 +9,7 @@ script = ExtResource("1_hqqwc")
 metadata/_custom_type_script = "uid://dp33r4gdgpxrg"
 
 [node name="ChunkMesh" type="MultiMeshInstance3D" parent="." unique_id=683546562]
+gi_mode = 2
 
 [node name="ChunkCollision" type="StaticBody3D" parent="." unique_id=703372992]
 
