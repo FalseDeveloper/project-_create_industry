@@ -20,3 +20,10 @@ var AXIS_DIRECTIONS := {
 	LEFT = Vector3.LEFT,
 	RIGHT = Vector3.RIGHT
 }
+
+var AXIS_DIRECTIONS_2D := {
+	UP = Vector2.UP,
+	DOWN = Vector2.DOWN,
+	LEFT = Vector2.LEFT,
+	RIGHT = Vector2.RIGHT
+}

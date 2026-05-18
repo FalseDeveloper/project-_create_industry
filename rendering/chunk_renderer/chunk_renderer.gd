@@ -16,9 +16,6 @@ var chunk_multimesh : MultiMesh = CHUNK_MULTIMESH_TEMPLATE.duplicate()
 func _ready():
 	chunk_mesh.multimesh = chunk_multimesh
 
-func _process(delta):
-	SHADER_MATERIAL.set_shader_parameter("OFFSET", SHADER_MATERIAL.get_shader_parameter("OFFSET") + (0.01 * delta))
-
 func update_chunk():
 	if loaded_chunk_data == null:
 		push_warning("["+name+"] Attempt to update chunk renderer with no chunk data.")

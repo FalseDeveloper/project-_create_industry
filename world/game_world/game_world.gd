@@ -72,10 +72,10 @@ func grid_to_world_space(grid_position : Vector3) -> Vector3:
 func get_neighboring_chunks(tile_position : Vector2i) -> Array[ChunkData]:
 	var neighbors : Array[ChunkData] = []
 	
-	neighbors.append(chunks.get(tile_position + Vector2i(1, 0)))
-	neighbors.append(chunks.get(tile_position + Vector2i(-1, 0)))
-	neighbors.append(chunks.get(tile_position + Vector2i(0, 1)))
-	neighbors.append(chunks.get(tile_position + Vector2i(0, -1)))
+	for direction : Vector2 in Utils.AXIS_DIRECTIONS_2D.values():
+		var other_chunk : ChunkData = chunks.get(Vector2(tile_position) + direction)
+		if other_chunk != null:
+			neighbors.append(other_chunk)
 	
 	return neighbors
 
