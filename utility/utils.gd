@@ -1,5 +1,9 @@
 extends Node
 
+# forceload these
+const _utils = preload("uid://bh5lu5oc4etb6")
+const _decorative_voxel_data = preload("uid://cumqbqo7fkuol")
+
 func get_snapped_direction(dir : Vector3) -> Vector3i:
 	var abs_x = abs(dir.x)
 	var abs_y = abs(dir.y)

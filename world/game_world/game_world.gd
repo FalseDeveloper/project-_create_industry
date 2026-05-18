@@ -97,6 +97,9 @@ func set_voxel(voxel_position : Vector3i, voxel_id : StringName = "AIR"):
 		renderers[neighbor].update_chunk()
 
 func _ready():
+	if VoxelDatabase.registered_voxels.is_empty():
+		await VoxelDatabase.data_loaded
+	
 	for x in 8:
 		for y in 8:
 			create_chunk(Vector2i(x - 4, y - 4))

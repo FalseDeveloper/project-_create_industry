@@ -8,6 +8,8 @@ var name_to_id : Dictionary[StringName, int] = {}
 
 var _current_id = 0
 
+signal data_loaded
+
 func get_voxels_in_dir(path : String) -> Array[VoxelData]:
 	var voxels_in_dir : Array[VoxelData] = []
 	
@@ -17,7 +19,7 @@ func get_voxels_in_dir(path : String) -> Array[VoxelData]:
 		var full_path := path + "/" + deep_path
 		
 		if deep_path.get_extension() == "tres":
-			var new_voxel : VoxelData = ResourceLoader.load(full_path, "VoxelData")
+			var new_voxel : VoxelData = ResourceLoader.load(full_path)
 			new_voxel.resource_name = deep_path.left(-5)
 			
 			voxels_in_dir.append(new_voxel)
@@ -40,3 +42,5 @@ func _ready():
 	print(preloaded_voxels)
 	
 	registered_voxels = preloaded_voxels
+	
+	data_loaded.emit()
