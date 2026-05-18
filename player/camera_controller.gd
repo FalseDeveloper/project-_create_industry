@@ -6,11 +6,15 @@ var pitch : float = 0
 
 @export var sensitivity : float = 0.3
 @export var pitch_limit : float = 85
+@export var enabled : bool = true
 
 func _ready():
 	pass # Replace with function body.
 
 func _input(event):
+	if not enabled:
+		return
+	
 	if event is InputEventMouseMotion:
 		var velocity = event.screen_relative
 		

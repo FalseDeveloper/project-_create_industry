@@ -87,6 +87,7 @@ func set_control_enabled(enabled : bool):
 	control_enabled = enabled
 	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if enabled else Input.MOUSE_MODE_VISIBLE
+	camera_controller.enabled = enabled
 	
 	print("Control enabled" if enabled else "Control disabled")
 
