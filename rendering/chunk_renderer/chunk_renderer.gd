@@ -12,6 +12,8 @@ var voxel_mesher := VoxelMesher.new()
 var loaded_chunk_data : ChunkData
 var chunk_multimesh : MultiMesh = CHUNK_MULTIMESH_TEMPLATE.duplicate()
 
+# hello meow meow meow meow
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	chunk_mesh.multimesh = chunk_multimesh
