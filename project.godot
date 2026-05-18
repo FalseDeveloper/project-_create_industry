@@ -14,11 +14,14 @@ config/name="Project: Create Industry"
 config/version="0.0.0"
 run/main_scene="uid://ndni4wrsexsb"
 config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/bg_color=Color(0.048732176, 0.033906717, 0.024787644, 1)
 config/icon="uid://domfj60vnp3hg"
 
 [autoload]
 
 Utils="*uid://bh5lu5oc4etb6"
+TextureDatabase="*uid://chcd0d4us0ki5"
+VoxelDatabase="*uid://c3xyjvfdsr56t"
 
 [display]
 
@@ -38,6 +41,20 @@ folder_colors={
 "res://scenes/": "red",
 "res://utility/": "yellow",
 "res://world/": "green"
+}
+
+[importer_defaults]
+
+texture={
+&"compress/high_quality": true,
+&"compress/mode": 2,
+&"compress/normal_map": 2,
+&"mipmaps/generate": true,
+&"roughness/mode": 1
+}
+2d_array_texture={
+&"compress/mode": 0,
+&"mipmaps/generate": false
 }
 
 [input]

@@ -89,7 +89,7 @@ func set_voxel(voxel_position : Vector3i, voxel_id : StringName = "AIR"):
 	if voxel_id == "AIR":
 		chunk_at_position.voxels.erase(voxel_chunk_position)
 	else:
-		chunk_at_position.voxels.set(voxel_chunk_position, VoxelInstance.new())
+		chunk_at_position.voxels.set(voxel_chunk_position, VoxelInstance.new("dirt"))
 	
 	renderers[chunk_at_position].update_chunk()
 	

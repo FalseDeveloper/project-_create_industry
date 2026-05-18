@@ -1,13 +1,7 @@
 [gd_resource type="PlaneMesh" format=3 uid="uid://crxj8fcqm4tsk"]
 
-[ext_resource type="Shader" uid="uid://dw2lsyfwbkq8s" path="res://rendering/voxel_texture.gdshader" id="1_7pikh"]
-[ext_resource type="Texture2D" uid="uid://k7ei0pftq3g4" path="res://data/textures/blocks/stone.png" id="2_6dmd8"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6dmd8"]
-render_priority = 0
-shader = ExtResource("1_7pikh")
-shader_parameter/block_texture = ExtResource("2_6dmd8")
+[ext_resource type="Material" uid="uid://pc3slxqyp2s2" path="res://rendering/chunk_renderer/chunk_material.tres" id="1_7pikh"]
 
 [resource]
-material = SubResource("ShaderMaterial_6dmd8")
+material = ExtResource("1_7pikh")
 size = Vector2(1, 1)

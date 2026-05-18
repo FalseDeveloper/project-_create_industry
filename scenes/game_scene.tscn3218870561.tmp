@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://ndni4wrsexsb"]
+
+[ext_resource type="PackedScene" uid="uid://4jxe6hvojlsa" path="res://world/game_world/game_world.tscn" id="1_w5aja"]
+[ext_resource type="PackedScene" uid="uid://fyi6dhgxic3f" path="res://player/Player.tscn" id="2_onqr8"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_onqr8"]
+sky_top_color = Color(0.57220656, 0.8055526, 0.9151527, 1)
+sky_horizon_color = Color(0.4861794, 0.6703578, 0.8780526, 1)
+ground_bottom_color = Color(0.35738134, 0.5287566, 0.785221, 1)
+ground_horizon_color = Color(0.4862745, 0.67058825, 0.8784314, 1)
+
+[sub_resource type="Sky" id="Sky_ycayy"]
+sky_material = SubResource("ProceduralSkyMaterial_onqr8")
+
+[sub_resource type="Environment" id="Environment_onqr8"]
+background_mode = 2
+background_color = Color(0.568, 0.6366333, 0.71, 1)
+sky = SubResource("Sky_ycayy")
+ambient_light_color = Color(0.40385985, 0.6212071, 0.77362204, 1)
+ssao_enabled = true
+ssil_radius = 5.49
+volumetric_fog_albedo = Color(0.6118436, 0.713476, 0.81118214, 1)
+volumetric_fog_emission = Color(0.292382, 0.4889722, 0.605893, 1)
+
+[sub_resource type="Gradient" id="Gradient_onqr8"]
+interpolation_mode = 2
+colors = PackedColorArray(0.0367163, 0.043418355, 0.13903406, 1, 0.23216039, 0.26614898, 0.4664778, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ycayy"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bw6k5"]
+width = 2048
+height = 2048
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_ycayy")
+color_ramp = SubResource("Gradient_onqr8")
+seamless = true
+bump_strength = 32.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onqr8"]
+albedo_texture = SubResource("NoiseTexture2D_bw6k5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bw6k5"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y3j0m"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rurhu"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kk2rg"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5spy"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_utbpp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ycayy"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw25s"]
+albedo_color = Color(1, 0, 0, 1)
+
+[node name="GameScene" type="Node3D" unique_id=1313055512]
+
+[node name="GameWorld" parent="." unique_id=1809775253 instance=ExtResource("1_w5aja")]
+
+[node name="Player" parent="." unique_id=1542657291 node_paths=PackedStringArray("game_world") instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7434472, 0)
+game_world = NodePath("../GameWorld")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1817036373]
+environment = SubResource("Environment_onqr8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=813252462]
+transform = Transform3D(1, 0, 0, 0, 0.5446976, 0.8386325, 0, -0.8386325, 0.5446976, 0, 3.599032, 2.337596)
+shadow_enabled = true
+
+[node name="DebugGround" type="CSGBox3D" parent="." unique_id=1440024726]
+transform = Transform3D(161.37428, -0.0010699296, 0.30610928, 0.17216812, 1.0011913, 0.1509169, -0.30699766, -0.0009365152, 160.99152, 0, -24.281666, 0)
+use_collision = true
+material = SubResource("StandardMaterial3D_onqr8")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="." unique_id=1141543035]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1)
+radius = 0.2
+material = SubResource("StandardMaterial3D_bw6k5")
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="." unique_id=1857529589]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 0)
+radius = 0.2
+material = SubResource("StandardMaterial3D_y3j0m")
+
+[node name="CSGSphere3D3" type="CSGSphere3D" parent="." unique_id=1001117439]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1)
+radius = 0.2
+material = SubResource("StandardMaterial3D_rurhu")
+
+[node name="CSGSphere3D4" type="CSGSphere3D" parent="." unique_id=330577616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1)
+radius = 0.2
+material = SubResource("StandardMaterial3D_kk2rg")
+
+[node name="CSGSphere3D5" type="CSGSphere3D" parent="." unique_id=1618453021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+radius = 0.2
+material = SubResource("StandardMaterial3D_b5spy")
+
+[node name="CSGSphere3D6" type="CSGSphere3D" parent="." unique_id=172596298]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 1)
+radius = 0.2
+material = SubResource("StandardMaterial3D_utbpp")
+
+[node name="CSGSphere3D7" type="CSGSphere3D" parent="." unique_id=1292927058]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+radius = 0.2
+material = SubResource("StandardMaterial3D_ycayy")
+
+[node name="CSGSphere3D8" type="CSGSphere3D" parent="." unique_id=27534060]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
+radius = 0.2
+material = SubResource("StandardMaterial3D_mw25s")
+
+[node name="CSGSphere3D8" type="CSGSphere3D" parent="CSGSphere3D8" unique_id=245639912]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -22.843178, 0)
+radius = 0.18754825
+material = SubResource("StandardMaterial3D_mw25s")

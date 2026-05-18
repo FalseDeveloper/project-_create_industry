@@ -4,6 +4,11 @@ extends RefCounted
 
 #TODO: Greedy meshing, how scary.
 
+class ChunkMeshResult:
+	var mesh_instance_to_voxel : Dictionary[Types.VoxelSurface, VoxelInstance]
+	var mesh_instances : Array[Types.VoxelSurface]
+	var vertices : PackedVector3Array
+
 ## Generates a quad face's vertices, intended for collision.
 func generate_face(center : Vector3, dir : Vector3) -> PackedVector3Array:
 	var vertices = PackedVector3Array()
@@ -32,9 +37,12 @@ func generate_face(center : Vector3, dir : Vector3) -> PackedVector3Array:
 	return vertices
 
 ## Generates a multi-mesh and a collider from chunk data
-func generate_chunk_multimesh(chunk_data : ChunkData, world : GameWorld) -> Dictionary:
-	var instances : Dictionary[Vector3, Vector3] = {}
-	var vertices : PackedVector3Array = PackedVector3Array()
+func generate_chunk_multimesh(chunk_data : ChunkData, world : GameWorld) -> ChunkMeshResult:
+	var result := ChunkMeshResult.new()
+	
+	result.mesh_instances = []
+	result.mesh_instance_to_voxel = {}
+	result.vertices = PackedVector3Array()
 	
 	for pos in chunk_data.voxels:
 		for direction in Utils.AXIS_DIRECTIONS.values():
@@ -42,15 +50,14 @@ func generate_chunk_multimesh(chunk_data : ChunkData, world : GameWorld) -> Dict
 				continue
 			
 			var center : Vector3 = Vector3(pos) + direction/2
+			var surface := Types.VoxelSurface.new(pos, Vector3i(direction))
 			
-			instances[center] = direction
+			result.mesh_instances.append(surface)
+			result.mesh_instance_to_voxel.set(surface, chunk_data.voxels[pos])
 			
 			var quad_vertices = generate_face(center, direction)
-			vertices.append_array(quad_vertices)
+			result.vertices.append_array(quad_vertices)
 			
 	
-	return {
-		instances = instances,
-		vertices = vertices
-	}
+	return result
 	

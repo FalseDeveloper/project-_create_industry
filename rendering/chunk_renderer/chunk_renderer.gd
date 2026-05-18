@@ -3,7 +3,6 @@ class_name ChunkRenderer
 extends Node3D
 
 const CHUNK_MULTIMESH_TEMPLATE = preload("uid://dqgmtsxxs35rb")
-const SHADER_MATERIAL = preload("res://world/game_world/quad.tres::ShaderMaterial_6dmd8")
 
 @onready var chunk_mesh = $ChunkMesh
 @onready var chunk_collision_shape = $ChunkCollision/CollisionShape3D
@@ -11,8 +10,6 @@ const SHADER_MATERIAL = preload("res://world/game_world/quad.tres::ShaderMateria
 var voxel_mesher := VoxelMesher.new()
 var loaded_chunk_data : ChunkData
 var chunk_multimesh : MultiMesh = CHUNK_MULTIMESH_TEMPLATE.duplicate()
-
-# hello meow meow meow meow
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,24 +21,33 @@ func update_chunk():
 		return
 	
 	var results = voxel_mesher.generate_chunk_multimesh(loaded_chunk_data, loaded_chunk_data.world)
-	var currentIndex = 0
+	var current_index = 0
 	
 	# Render voxel multimeshes
-	for voxelPosition in results.instances:
-		var voxelDirection = results.instances[voxelPosition]
+	for voxel_surface : Types.VoxelSurface in results.mesh_instances:
+		var surface_direction := voxel_surface.direction
+		var surface_position := voxel_surface.position
+		var surface_basis := Basis(Quaternion(Vector3.UP, surface_direction))
+		var v_instance : VoxelInstance = results.mesh_instance_to_voxel[voxel_surface]
 		
-		var voxelBasis = Basis(Quaternion(Vector3.UP, voxelDirection))
+		if surface_direction.x != 0:
+			surface_basis = surface_basis.rotated(Vector3.RIGHT, deg_to_rad(90)).orthonormalized()
 		
-		if voxelDirection.x != 0:
-			voxelBasis = voxelBasis.rotated(Vector3.RIGHT, deg_to_rad(90)).orthonormalized()
+		var surface_transform := Transform3D(surface_basis, Vector3(surface_position) + Vector3(surface_direction)/2)
 		
-		var voxelTransform = Transform3D(voxelBasis, voxelPosition)
+		chunk_multimesh.set_instance_transform(current_index, surface_transform)
 		
-		chunk_multimesh.set_instance_transform(currentIndex, voxelTransform)
+		var v_data = VoxelDatabase.get_data_from_name(v_instance.name)
 		
-		currentIndex += 1
+		if v_data is DecorativeVoxelData:
+			chunk_multimesh.set_instance_custom_data(current_index, Color(
+				TextureDatabase.id_to_index.get(v_data.texture), 
+				0, 0, 0
+				))
+		
+		current_index += 1
 	
-	chunk_multimesh.visible_instance_count = currentIndex
+	chunk_multimesh.visible_instance_count = current_index
 	
 	var voxel_shape := ConcavePolygonShape3D.new()
 	voxel_shape.set_faces(results.vertices)

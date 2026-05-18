@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DecorativeVoxelData" format=3 uid="uid://de46js4hpjtfa"]
+
+[ext_resource type="Script" uid="uid://cumqbqo7fkuol" path="res://world/voxel_data/decorative_voxel_data.gd" id="1_wtwtr"]
+
+[resource]
+script = ExtResource("1_wtwtr")
+texture = &"dirt"
+metadata/_custom_type_script = "uid://cumqbqo7fkuol"

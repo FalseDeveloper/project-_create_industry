@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://pc3slxqyp2s2"]
+
+[ext_resource type="Shader" uid="uid://dw2lsyfwbkq8s" path="res://rendering/voxel_texture.gdshader" id="1_ogj88"]
+[ext_resource type="Texture2D" uid="uid://k7ei0pftq3g4" path="res://data/textures/blocks/stone.png" id="2_hor5p"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ogj88")
+shader_parameter/block_texture = ExtResource("2_hor5p")

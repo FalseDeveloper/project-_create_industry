@@ -10,3 +10,7 @@ enum VoxelDataType {
 class VoxelSurface:
 	var position : Vector3i
 	var direction : Vector3i
+	
+	func _init(pos : Vector3i = Vector3i.ZERO, dir : Vector3i = Vector3i.UP):
+		position = pos
+		direction = dir
