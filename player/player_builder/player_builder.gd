@@ -1,10 +1,15 @@
 class_name PlayerBuilder
 extends Node
 
+const VOXEL_SHAPE = preload("uid://bxhyyg24d2nbp")
+
 @export var build_range = 5
 @export var player : Player
+@export_flags_3d_physics var verifier_collision_mask
 
 @onready var aimer = $Aimer
+
+var verifier_box := BoxShape3D.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -48,6 +53,17 @@ func _input(event):
 		var targeted_surface : Types.VoxelSurface = get_targeted_surface()
 		
 		if targeted_surface:
+			var space_state := player.get_world_3d().direct_space_state
+			var params := PhysicsShapeQueryParameters3D.new()
+			params.collision_mask = verifier_collision_mask
+			params.shape = VOXEL_SHAPE
+			params.transform = Transform3D(Basis.IDENTITY, Vector3(targeted_surface.position + targeted_surface.direction))
+			
+			var result := space_state.intersect_shape(params, 1)
+			
+			if !result.is_empty():
+				return
+			
 			player.game_world.set_voxel(targeted_surface.position + targeted_surface.direction, "STONE")
 		
 	

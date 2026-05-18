@@ -27,7 +27,7 @@ func get_voxels_in_dir(path : String) -> Array[VoxelData]:
 			name_to_id.set(new_voxel.resource_name, _current_id)
 			_current_id += 1
 			
-			print("Loaded voxel: ", new_voxel.resource_name)
+			print("\tLoaded voxel: ", new_voxel.resource_name)
 		elif deep_path[-1] == "/":
 			voxels_in_dir.append_array(get_voxels_in_dir(full_path))
 	
@@ -37,10 +37,10 @@ func get_data_from_name(voxel_name : StringName) -> VoxelData:
 	return registered_voxels.get(name_to_id.get(voxel_name))
 
 func _ready():
+	print("# Started Loading Voxels #")
 	var preloaded_voxels := get_voxels_in_dir(VOXEL_RESOURCES_PATH)
 	
-	print(preloaded_voxels)
-	
 	registered_voxels = preloaded_voxels
+	print("# Finished Loading Voxels #")
 	
 	data_loaded.emit()

@@ -13,7 +13,7 @@ func get_images_in_dir(path : String) -> Array[Image]:
 	
 	var list := ResourceLoader.list_directory(path)
 	
-	for deep_path : String in list:	
+	for deep_path : String in list:
 		var full_path := path + "/" + deep_path
 		
 		if deep_path.get_extension() == "png":
@@ -32,7 +32,7 @@ func get_images_in_dir(path : String) -> Array[Image]:
 			id_to_index.set(deep_path.left(-4), current_id)
 			current_id += 1
 			
-			print("Loaded texture: ", new_image.resource_name)
+			print("\tLoaded texture: ", new_image.resource_name)
 		elif deep_path[-1] == "/":
 			images_in_dir.append_array(get_images_in_dir(full_path))
 		
@@ -40,14 +40,16 @@ func get_images_in_dir(path : String) -> Array[Image]:
 	return images_in_dir
 
 func _ready():
+	print("# Started Loading Textures #")
+	
 	# Preload textures.
 	var preloaded_textures : Array[Image] = get_images_in_dir(TEXTURE_RESOURCES_PATH)
-	
-	print(id_to_index)
 	
 	texture_array.create_from_images(preloaded_textures)
 	
 	CHUNK_MATERIAL.set_shader_parameter("voxel_textures", texture_array)
+	
+	print("# Finished Loading Textures #")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
