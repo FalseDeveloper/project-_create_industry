@@ -96,11 +96,14 @@ func handle_god_mode(delta):
 	var input_y = Input.get_axis("Down", "Jump")
 	var input_z = Input.get_axis("Forwards", "Backwards")
 	
-	god_goal += global_transform.basis * Vector3(
+	var current_god_velocity = Vector3(
 		input_x,
 		input_y,
 		input_z
-	) * god_velocity * delta
+	) * god_velocity
+	
+	god_goal += global_transform.basis * current_god_velocity * delta
+	velocity = current_god_velocity
 	
 	position = position.lerp(god_goal, 10 * delta)
 	
