@@ -16,6 +16,8 @@ var god_goal = Vector3.ZERO
 
 var control_enabled : bool = true
 
+#meow
+
 func _ready():
 	set_control_enabled(control_enabled)
 
