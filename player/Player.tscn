@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://rlb6s8ksj0om" path="res://player/camera_controller.gd" id="2_3c3w1"]
 [ext_resource type="Script" uid="uid://dival45w5g4oi" path="res://player/player_builder/player_builder.gd" id="3_wnvi2"]
 [ext_resource type="Texture2D" uid="uid://cqch3ob2vrkt4" path="res://player/player_builder/sprites/aimer.png" id="4_83hs8"]
+[ext_resource type="Texture2D" uid="uid://k7ei0pftq3g4" path="res://data/textures/blocks/stone.png" id="5_qjkh3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulp21"]
 
@@ -38,7 +39,14 @@ reflected_light_source = 1
 [sub_resource type="World3D" id="World3D_g6k8r"]
 environment = SubResource("Environment_qjkh3")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g6k8r"]
+albedo_texture = ExtResource("5_qjkh3")
+uv1_offset = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+texture_filter = 0
+
 [sub_resource type="BoxMesh" id="BoxMesh_boad6"]
+material = SubResource("StandardMaterial3D_g6k8r")
 
 [node name="Player" type="CharacterBody3D" unique_id=1542657291]
 collision_layer = 2
@@ -86,8 +94,8 @@ offset_bottom = 1080.0
 
 [node name="TextureRect" type="TextureRect" parent="PlayerBuilder/BuilderHUD" unique_id=348146366]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 205.0
+offset_bottom = 205.0
 texture = SubResource("ViewportTexture_yw30f")
 
 [node name="SubViewport" type="SubViewport" parent="PlayerBuilder" unique_id=1535933495]
