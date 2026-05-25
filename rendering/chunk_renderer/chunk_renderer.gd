@@ -33,6 +33,9 @@ func update_chunk():
 		if surface_direction.x != 0:
 			surface_basis = surface_basis.rotated(Vector3.RIGHT, deg_to_rad(90)).orthonormalized()
 		
+		if surface_direction.z == -1:
+			surface_basis = surface_basis.rotated(Vector3.FORWARD, deg_to_rad(180)).orthonormalized()
+		
 		var surface_transform := Transform3D(surface_basis, Vector3(surface_position) + Vector3(surface_direction)/2)
 		
 		chunk_multimesh.set_instance_transform(current_index, surface_transform)
