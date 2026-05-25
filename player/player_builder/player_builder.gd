@@ -10,10 +10,14 @@ const VOXEL_SHAPE = preload("uid://bxhyyg24d2nbp")
 @onready var aimer = $Aimer
 
 var verifier_box := BoxShape3D.new()
+var selector_voxel_texture = preload("uid://bna75uf4wc6ba")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var block_id := TextureDatabase.name_to_index["dirt"]
+	var block_img := TextureDatabase.get_image_from_id(block_id)
+	
+	selector_voxel_texture.albedo_texture = ImageTexture.create_from_image(block_img)
 
 func _process(_delta):
 	var targeted_surface := get_targeted_surface()

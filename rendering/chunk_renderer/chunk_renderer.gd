@@ -41,7 +41,7 @@ func update_chunk():
 		
 		if v_data is DecorativeVoxelData:
 			chunk_multimesh.set_instance_custom_data(current_index, Color(
-				TextureDatabase.id_to_index.get(v_data.texture), 
+				TextureDatabase.name_to_index.get(v_data.texture), 
 				0, 0, 0
 				))
 		

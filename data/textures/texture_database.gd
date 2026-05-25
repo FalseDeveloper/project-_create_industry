@@ -5,7 +5,7 @@ const TEXTURE_RESOURCES_PATH : StringName = "res://data/textures"
 const CHUNK_MATERIAL = preload("uid://pc3slxqyp2s2")
 
 var texture_array := Texture2DArray.new()
-var id_to_index : Dictionary[String, int] = {}
+var name_to_index : Dictionary[String, int] = {}
 var current_id : int = 0
 
 func get_images_in_dir(path : String) -> Array[Image]:
@@ -29,7 +29,7 @@ func get_images_in_dir(path : String) -> Array[Image]:
 			
 			images_in_dir.append(new_image)
 			
-			id_to_index.set(deep_path.left(-4), current_id)
+			name_to_index.set(deep_path.left(-4), current_id)
 			current_id += 1
 			
 			print("\tLoaded texture: ", new_image.resource_name)
@@ -50,6 +50,13 @@ func _ready():
 	CHUNK_MATERIAL.set_shader_parameter("voxel_textures", texture_array)
 	
 	print("# Finished Loading Textures #")
+
+func get_image_from_id(id : int) -> Image:
+	var returned_image : Image
+	
+	returned_image = texture_array.get_layer_data(id)
+	
+	return returned_image
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://rlb6s8ksj0om" path="res://player/camera_controller.gd" id="2_3c3w1"]
 [ext_resource type="Script" uid="uid://dival45w5g4oi" path="res://player/player_builder/player_builder.gd" id="3_wnvi2"]
 [ext_resource type="Texture2D" uid="uid://cqch3ob2vrkt4" path="res://player/player_builder/sprites/aimer.png" id="4_83hs8"]
-[ext_resource type="Texture2D" uid="uid://k7ei0pftq3g4" path="res://data/textures/blocks/stone.png" id="5_qjkh3"]
+[ext_resource type="Material" uid="uid://bna75uf4wc6ba" path="res://player/player_builder/selector_voxel_texture.tres" id="5_qjkh3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulp21"]
 
@@ -28,7 +28,7 @@ texture_filter = 0
 size = Vector3(1.01, 1.01, 1.01)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_yw30f"]
-viewport_path = NodePath("PlayerBuilder/SubViewport")
+viewport_path = NodePath("PlayerBuilder/SelectorViewport")
 
 [sub_resource type="Environment" id="Environment_qjkh3"]
 background_color = Color(1, 1, 1, 0)
@@ -39,14 +39,8 @@ reflected_light_source = 1
 [sub_resource type="World3D" id="World3D_g6k8r"]
 environment = SubResource("Environment_qjkh3")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g6k8r"]
-albedo_texture = ExtResource("5_qjkh3")
-uv1_offset = Vector3(0.5, 0.5, 0.5)
-uv1_triplanar = true
-texture_filter = 0
-
 [sub_resource type="BoxMesh" id="BoxMesh_boad6"]
-material = SubResource("StandardMaterial3D_g6k8r")
+material = ExtResource("5_qjkh3")
 
 [node name="Player" type="CharacterBody3D" unique_id=1542657291]
 collision_layer = 2
@@ -98,18 +92,18 @@ offset_right = 205.0
 offset_bottom = 205.0
 texture = SubResource("ViewportTexture_yw30f")
 
-[node name="SubViewport" type="SubViewport" parent="PlayerBuilder" unique_id=1535933495]
+[node name="SelectorViewport" type="SubViewport" parent="PlayerBuilder" unique_id=1535933495]
 world_3d = SubResource("World3D_g6k8r")
 transparent_bg = true
 size = Vector2i(64, 64)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerBuilder/SubViewport" unique_id=798459545]
+[node name="SelectorVoxelMesh" type="MeshInstance3D" parent="PlayerBuilder/SelectorViewport" unique_id=798459545]
 mesh = SubResource("BoxMesh_boad6")
 
-[node name="Camera3D" type="Camera3D" parent="PlayerBuilder/SubViewport" unique_id=372394632]
+[node name="Camera3D" type="Camera3D" parent="PlayerBuilder/SelectorViewport" unique_id=372394632]
 transform = Transform3D(0.7071068, -0.5, 0.5, 0, 0.70710677, 0.70710677, -0.7071068, -0.5, 0.5, 1, 1.5, 1)
 projection = 1
 size = 2.5
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="PlayerBuilder/SubViewport" unique_id=1001912051]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="PlayerBuilder/SelectorViewport" unique_id=1001912051]
 transform = Transform3D(0.7071066, 0.4999999, -0.5000001, 1.3155382e-07, 0.70710677, 0.70710677, 0.7071069, -0.5000001, 0.49999988, 0.9818041, 1.3884807, 0.9818041)
