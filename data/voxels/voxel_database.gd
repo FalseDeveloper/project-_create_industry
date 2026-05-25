@@ -5,6 +5,8 @@ const VOXEL_RESOURCES_PATH = "res://data/voxels/voxel_resources/"
 
 var registered_voxels : Array[VoxelData] = []
 var name_to_id : Dictionary[StringName, int] = {}
+var id_to_name : Dictionary[int, StringName] = {}
+var voxel_count : int = 0
 
 var _current_id = 0
 
@@ -25,6 +27,7 @@ func get_voxels_in_dir(path : String) -> Array[VoxelData]:
 			voxels_in_dir.append(new_voxel)
 			
 			name_to_id.set(new_voxel.resource_name, _current_id)
+			id_to_name.set(_current_id, new_voxel.resource_name)
 			_current_id += 1
 			
 			print("\tLoaded voxel: ", new_voxel.resource_name)
@@ -41,6 +44,7 @@ func _ready():
 	var preloaded_voxels := get_voxels_in_dir(VOXEL_RESOURCES_PATH)
 	
 	registered_voxels = preloaded_voxels
+	voxel_count = registered_voxels.size()
 	print("# Finished Loading Voxels #")
 	
 	data_loaded.emit()

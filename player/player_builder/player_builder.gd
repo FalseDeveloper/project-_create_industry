@@ -10,14 +10,13 @@ const VOXEL_SHAPE = preload("uid://bxhyyg24d2nbp")
 @onready var aimer = $Aimer
 
 var verifier_box := BoxShape3D.new()
-var selector_voxel_texture = preload("uid://bna75uf4wc6ba")
+var selector_voxel_texture := preload("uid://bna75uf4wc6ba")
+
+var selected_voxel = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var block_id := TextureDatabase.name_to_index["dirt"]
-	var block_img := TextureDatabase.get_image_from_id(block_id)
-	
-	selector_voxel_texture.albedo_texture = ImageTexture.create_from_image(block_img)
+	pass
 
 func _process(_delta):
 	var targeted_surface := get_targeted_surface()
@@ -52,6 +51,18 @@ func get_targeted_surface() -> Types.VoxelSurface:
 	
 	return null
 
+func set_selected_voxel(id : int):
+	if id > VoxelDatabase.voxel_count - 1:
+		id = 0
+	elif id < 0:
+		id = VoxelDatabase.voxel_count - 1
+	
+	var voxel_img := TextureDatabase.get_image_from_id(id)
+	selector_voxel_texture.set_shader_parameter("texture_albedo", ImageTexture.create_from_image(voxel_img))
+	
+	print("Set selected voxel to ", id)
+	selected_voxel = id
+
 func _input(event):	
 	if event.is_action_pressed("Place"):
 		var targeted_surface : Types.VoxelSurface = get_targeted_surface()
@@ -68,10 +79,15 @@ func _input(event):
 			if !result.is_empty():
 				return
 			
-			player.game_world.set_voxel(targeted_surface.position + targeted_surface.direction, "STONE")
-		
-	
-	if event.is_action_pressed("Destroy"):
+			player.game_world.set_voxel(
+				targeted_surface.position + targeted_surface.direction, 
+				VoxelDatabase.id_to_name[selected_voxel]
+			)
+	elif event.is_action_pressed("Next"):
+		set_selected_voxel(selected_voxel + 1)
+	elif event.is_action_pressed("Previous"):
+		set_selected_voxel(selected_voxel - 1)
+	elif event.is_action_pressed("Destroy"):
 		var targeted_surface : Types.VoxelSurface = get_targeted_surface()
 		
 		if targeted_surface:

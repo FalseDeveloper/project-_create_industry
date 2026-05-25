@@ -55,6 +55,7 @@ func get_image_from_id(id : int) -> Image:
 	var returned_image : Image
 	
 	returned_image = texture_array.get_layer_data(id)
+	returned_image.srgb_to_linear()
 	
 	return returned_image
 
