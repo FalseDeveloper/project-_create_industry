@@ -30,6 +30,9 @@ size = Vector3(1.01, 1.01, 1.01)
 [sub_resource type="ViewportTexture" id="ViewportTexture_yw30f"]
 viewport_path = NodePath("PlayerBuilder/SelectorViewport")
 
+[sub_resource type="LabelSettings" id="LabelSettings_qjkh3"]
+font_size = 32
+
 [sub_resource type="Environment" id="Environment_qjkh3"]
 background_color = Color(1, 1, 1, 0)
 ambient_light_source = 2
@@ -92,10 +95,19 @@ offset_right = 205.0
 offset_bottom = 205.0
 texture = SubResource("ViewportTexture_yw30f")
 
+[node name="VoxelName" type="Label" parent="PlayerBuilder/BuilderHUD" unique_id=1440798263]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 188.0
+offset_right = 387.0
+offset_bottom = 234.0
+text = "-1:editor"
+label_settings = SubResource("LabelSettings_qjkh3")
+
 [node name="SelectorViewport" type="SubViewport" parent="PlayerBuilder" unique_id=1535933495]
 world_3d = SubResource("World3D_g6k8r")
 transparent_bg = true
-size = Vector2i(64, 64)
+size = Vector2i(128, 128)
 
 [node name="SelectorVoxelMesh" type="MeshInstance3D" parent="PlayerBuilder/SelectorViewport" unique_id=798459545]
 mesh = SubResource("BoxMesh_boad6")

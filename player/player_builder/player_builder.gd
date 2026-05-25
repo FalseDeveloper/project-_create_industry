@@ -8,6 +8,7 @@ const VOXEL_SHAPE = preload("uid://bxhyyg24d2nbp")
 @export_flags_3d_physics var verifier_collision_mask
 
 @onready var aimer = $Aimer
+@onready var voxel_name = $BuilderHUD/VoxelName
 
 var verifier_box := BoxShape3D.new()
 var selector_voxel_texture := preload("uid://bna75uf4wc6ba")
@@ -16,7 +17,7 @@ var selected_voxel = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	set_selected_voxel(selected_voxel)
 
 func _process(_delta):
 	var targeted_surface := get_targeted_surface()
@@ -60,7 +61,7 @@ func set_selected_voxel(id : int):
 	var voxel_img := TextureDatabase.get_image_from_id(id)
 	selector_voxel_texture.set_shader_parameter("texture_albedo", ImageTexture.create_from_image(voxel_img))
 	
-	print("Set selected voxel to ", id)
+	voxel_name.text = str(id) + ":" + TextureDatabase.index_to_name[id]
 	selected_voxel = id
 
 func _input(event):	

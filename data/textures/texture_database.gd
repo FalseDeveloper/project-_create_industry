@@ -6,6 +6,7 @@ const CHUNK_MATERIAL = preload("uid://pc3slxqyp2s2")
 
 var texture_array := Texture2DArray.new()
 var name_to_index : Dictionary[String, int] = {}
+var index_to_name : Dictionary[int, String] = {}
 var current_id : int = 0
 
 func get_images_in_dir(path : String) -> Array[Image]:
@@ -30,6 +31,7 @@ func get_images_in_dir(path : String) -> Array[Image]:
 			images_in_dir.append(new_image)
 			
 			name_to_index.set(deep_path.left(-4), current_id)
+			index_to_name.set(current_id, deep_path.left(-4))
 			current_id += 1
 			
 			print("\tLoaded texture: ", new_image.resource_name)
@@ -55,7 +57,6 @@ func get_image_from_id(id : int) -> Image:
 	var returned_image : Image
 	
 	returned_image = texture_array.get_layer_data(id)
-	returned_image.srgb_to_linear()
 	
 	return returned_image
 
