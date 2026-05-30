@@ -57,6 +57,16 @@ func get_voxel_at_position(voxel_position : Vector3i) -> VoxelInstance:
 	
 	return voxel_at_position
 
+func is_voxel_solid(voxel_position : Vector3i) -> bool:	
+	var voxel_at_pos := get_voxel_at_position(voxel_position)
+	
+	if voxel_at_pos == null:
+		return false
+	elif voxel_at_pos.data is DecorativeVoxelData:
+		return true
+	
+	return false
+
 func world_to_grid_space(world_position : Vector3) -> Vector3i:
 	var grid_position := Vector3i(
 		round(world_position.x),

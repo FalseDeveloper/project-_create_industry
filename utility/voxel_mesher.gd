@@ -45,8 +45,12 @@ func generate_chunk_multimesh(chunk_data : ChunkData, world : GameWorld) -> Chun
 	result.vertices = PackedVector3Array()
 	
 	for pos in chunk_data.voxels:
+		var current_voxel := chunk_data.voxels[pos]
+		if not current_voxel.data is DecorativeVoxelData:
+			continue
+		
 		for direction in Utils.AXIS_DIRECTIONS.values():
-			if world.get_voxel_at_position(chunk_data.chunk_to_grid_position(pos + Vector3i(direction))) != null:
+			if world.is_voxel_solid(chunk_data.chunk_to_grid_position(pos + Vector3i(direction))) == true:
 				continue
 			
 			var center : Vector3 = Vector3(pos) + direction/2

@@ -28,6 +28,7 @@ func _process(_delta):
 		aimer.position = targeted_surface.position
 		
 
+## Get the surface targeted by the player
 func get_targeted_surface() -> Types.VoxelSurface:
 	var targeted_surface : Types.VoxelSurface = Types.VoxelSurface.new()
 	
@@ -52,6 +53,7 @@ func get_targeted_surface() -> Types.VoxelSurface:
 	
 	return null
 
+## Set the select voxel id
 func set_selected_voxel(id : int):
 	if id > VoxelDatabase.voxel_count - 1:
 		id = 0
@@ -64,30 +66,44 @@ func set_selected_voxel(id : int):
 	voxel_name.text = str(id) + ":" + TextureDatabase.index_to_name[id]
 	selected_voxel = id
 
-func _input(event):	
-	if event.is_action_pressed("Place"):
-		var targeted_surface : Types.VoxelSurface = get_targeted_surface()
+## Attempt to place the selected voxel
+func place_voxel():
+	var targeted_surface : Types.VoxelSurface = get_targeted_surface()
+	
+	if targeted_surface:
+		var voxel_at_pos = player.game_world.get_voxel_at_position(targeted_surface.position + targeted_surface.direction)
+		if voxel_at_pos != null:
+			return
 		
-		if targeted_surface:
-			var space_state := player.get_world_3d().direct_space_state
-			var params := PhysicsShapeQueryParameters3D.new()
-			params.collision_mask = verifier_collision_mask
-			params.shape = VOXEL_SHAPE
-			params.transform = Transform3D(Basis.IDENTITY, Vector3(targeted_surface.position + targeted_surface.direction))
-			
-			var result := space_state.intersect_shape(params, 1)
-			
-			if !result.is_empty():
-				return
-			
-			player.game_world.set_voxel(
-				targeted_surface.position + targeted_surface.direction, 
-				VoxelDatabase.id_to_name[selected_voxel]
-			)
+		var space_state := player.get_world_3d().direct_space_state
+		var params := PhysicsShapeQueryParameters3D.new()
+		params.collision_mask = verifier_collision_mask
+		params.shape = VOXEL_SHAPE
+		params.transform = Transform3D(Basis.IDENTITY, Vector3(targeted_surface.position + targeted_surface.direction))
+		
+		var result := space_state.intersect_shape(params, 1)
+		
+		if !result.is_empty():
+			return
+		
+		player.game_world.set_voxel(
+			targeted_surface.position + targeted_surface.direction, 
+			VoxelDatabase.id_to_name[selected_voxel]
+		)
+
+func _input(event):
+	if event.is_action_pressed("Place"):
+		# Attempt to place the selected voxel
+		place_voxel()
+		
 	elif event.is_action_pressed("Next"):
+		# Select next voxel in list
 		set_selected_voxel(selected_voxel + 1)
+		
 	elif event.is_action_pressed("Previous"):
+		# Select previous voxel in list
 		set_selected_voxel(selected_voxel - 1)
+		
 	elif event.is_action_pressed("Destroy"):
 		var targeted_surface : Types.VoxelSurface = get_targeted_surface()
 		
