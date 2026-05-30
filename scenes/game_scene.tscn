@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://4jxe6hvojlsa" path="res://world/game_world/game_world.tscn" id="1_w5aja"]
 [ext_resource type="PackedScene" uid="uid://fyi6dhgxic3f" path="res://player/player.tscn" id="2_onqr8"]
-[ext_resource type="Texture2D" uid="uid://k7ei0pftq3g4" path="res://data/textures/blocks/stone.png" id="3_ycayy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_onqr8"]
 sky_top_color = Color(0.57220656, 0.8055526, 0.9151527, 1)
@@ -63,15 +62,6 @@ albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw25s"]
 albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g6k8r"]
-albedo_texture = ExtResource("3_ycayy")
-uv1_offset = Vector3(0.5, 0.5, 0.5)
-uv1_triplanar = true
-texture_filter = 0
-
-[sub_resource type="BoxMesh" id="BoxMesh_bw6k5"]
-material = SubResource("StandardMaterial3D_g6k8r")
 
 [node name="GameScene" type="Node3D" unique_id=1313055512]
 
@@ -138,7 +128,3 @@ material = SubResource("StandardMaterial3D_mw25s")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -22.843178, 0)
 radius = 0.18754825
 material = SubResource("StandardMaterial3D_mw25s")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1563243660]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3860927, 1.9371353, 0)
-mesh = SubResource("BoxMesh_bw6k5")
